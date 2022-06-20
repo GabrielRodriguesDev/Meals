@@ -38,6 +38,29 @@ class MyApp extends StatelessWidget {
         AppRoutes.categoriesMeals: (contexto) => const CategoriesMealsScreen(),
         AppRoutes.mealDetail: (contexto) => const MealDetailScreen()
       },
+      onGenerateRoute: (settings) {
+        //! onGenerate Mode é uma função do MaterialApp que permite que possamos definir algum comportamento sobre o app ao tentar acessar alguma rota.
+        //! Toda vez que tentamos acessar uma rota nomeada esse método é executado então podemos fazer alguma validação de rota, para redirecionar ou coisa do tipo..
+        //! Lembrando que ele só cai na execução do método caso a rota não tenha sido encontrada nas rotas configuradas.
+        if (settings.name == '/alguma-coisa') {
+          // ignore: todo
+          return null; // TODO -> Retorna outra rota
+        } else if (settings.name == 'outra coisa') {
+          // ignore: todo
+          return null; // TODO -> Retorna outra rota
+        } else {
+          return MaterialPageRoute(
+              builder: (_) =>
+                  const CategoriesScreen()); //!Caso nenhuma rota seja encontrada.
+        }
+        //! Sento que o settings representa os metadados da rota que foi chamada
+      },
+      onUnknownRoute: (settings) {
+        //! Caso as rota especificada não seja encontrada nas configuraçõe de rotas, após isso o flutter chama o método
+        //! onGenerateRoute -> caso dentro dele também não tenha nenhuma resolução, esse método e chamado, confirmando que de fato a toda não foi encontrada.
+        //! Com iss podemos fazer alguma lógica como redirecionar a tela princial.
+        return MaterialPageRoute(builder: (_) => const CategoriesScreen());
+      },
     );
   }
 }
